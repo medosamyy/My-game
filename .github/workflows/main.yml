@@ -1,0 +1,20 @@
+name: Build My EXE
+on: [push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install Tools
+        run: pip install customtkinter pyinstaller
+      - name: Create EXE
+        run: pyinstaller --onefile --windowed Game
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: Game_Execution_File
+          path: dist/*.exe
